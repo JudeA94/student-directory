@@ -79,7 +79,7 @@ end
 
 def load_students(filename = 'students.csv')
   CSV.foreach(filename) do |line|
-    name, cohort = line[0], line[1]
+    name, cohort = line
     add_students(name, cohort)
   end
   puts 'Students loaded succesfully'
