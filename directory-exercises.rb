@@ -69,9 +69,9 @@ end
 def save_students
   puts 'What file name and extension would you like, e.g. textfile.txt'
   file_name = $stdin.gets.chomp
-  file = File.open(file_name, 'w') # open the file for writing
-  write_to_file(file)
-  file.close
+  File.open(file_name, 'w') do |file| # open the file for writing
+    write_to_file(file)
+  end
   puts 'Students saved succesfully'
 end
 
@@ -84,12 +84,12 @@ def write_to_file(file)
 end
 
 def load_students(filename = 'students.csv')
-  file = File.open(filename, 'r')
+  File.open(filename, 'r') do |file|
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
       add_students(name, cohort)
     end
-  file.close
+  end
   puts 'Students loaded succesfully'
 end
 
