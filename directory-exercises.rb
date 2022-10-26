@@ -1,3 +1,4 @@
+require 'csv'
 @students = [] # an empty array accessible to all methods
 
 def input_students
@@ -67,9 +68,9 @@ def print_footer
 end
 
 def save_students
-  puts 'What file name and extension would you like, e.g. textfile.txt'
+  puts 'What file name and extension would you like, please include .csv at the end'
   file_name = $stdin.gets.chomp
-  File.open(file_name, 'w') do |file| # open the file for writing
+  CSV.open(file_name, 'w') do |file| # open the file for writing
     write_to_file(file)
   end
   puts 'Students saved succesfully'
@@ -77,9 +78,7 @@ end
 
 def write_to_file(file)
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(',')
-    file.puts csv_line
+    file << [student[:name], student[:cohort]]
   end
 end
 
