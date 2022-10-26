@@ -23,7 +23,7 @@ def print_menu
   puts '1. Input the students'
   puts '2. Show the students'
   puts '3. Save the list to file'
-  puts '4. Load the list from students.csv'
+  puts '4. Load the list from a file'
   puts '9. Exit' # 9 because we'll be adding more items
 end
 
@@ -42,7 +42,8 @@ def process(selection)
   when '3'
     save_students
   when '4'
-    load_students
+    puts 'What file would you like to load students from?'
+    load_students($stdin.gets.chomp)
   when '9'
     exit # this will cause the program to terminate
   else
@@ -66,10 +67,11 @@ def print_footer
 end
 
 def save_students
-  puts "What file name and extension would you like, e.g. textfile.txt"
+  puts 'What file name and extension would you like, e.g. textfile.txt'
   file_name = $stdin.gets.chomp
   file = File.open(file_name, 'w') # open the file for writing
   write_to_file(file)
+  file.close
   puts 'Students saved succesfully'
 end
 
@@ -79,15 +81,14 @@ def write_to_file(file)
     csv_line = student_data.join(',')
     file.puts csv_line
   end
-  file.close
 end
 
 def load_students(filename = 'students.csv')
   file = File.open(filename, 'r')
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_students(name, cohort)
-  end
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      add_students(name, cohort)
+    end
   file.close
   puts 'Students loaded succesfully'
 end
