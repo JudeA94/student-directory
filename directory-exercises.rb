@@ -36,19 +36,14 @@ end
 
 def process(selection)
   case selection
-  when '1'
-    input_students
-  when '2'
-    show_students
-  when '3'
-    save_students
+  when '1' then input_students
+  when '2' then show_students
+  when '3' then save_students
   when '4'
     puts 'What file would you like to load students from?'
     load_students($stdin.gets.chomp)
-  when '9'
-    exit # this will cause the program to terminate
-  else
-    puts "I don't know what you meant, try again"
+  when '9' then exit # this will cause the program to terminate
+  else puts "I don't know what you meant, try again"
   end
 end
 
@@ -83,11 +78,9 @@ def write_to_file(file)
 end
 
 def load_students(filename = 'students.csv')
-  File.open(filename, 'r') do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_students(name, cohort)
-    end
+  CSV.foreach(filename) do |line|
+    name, cohort = line[0], line[1]
+    add_students(name, cohort)
   end
   puts 'Students loaded succesfully'
 end
