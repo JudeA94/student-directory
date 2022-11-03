@@ -6,11 +6,18 @@ def input_students
   puts 'To finish, just hit return twice'
   name = $stdin.gets.chomp # get the first name
   until name.empty? # while the name is not empty, repeat this code
-    add_students(name, 'november') # add the student hash to the array
+    add_students(name, ask_for_cohort) # add the student hash to the array
     puts "Now we have #{@students.count} students"
     name = $stdin.gets.chomp # get another name from the user
   end
   puts 'Students inputted succesfully'
+end
+
+def ask_for_cohort
+  puts 'Please enter the cohort.'
+  cohort = $stdin.gets.chomp
+  if cohort == '' then cohort = 'november' end
+  cohort
 end
 
 def interactive_menu
